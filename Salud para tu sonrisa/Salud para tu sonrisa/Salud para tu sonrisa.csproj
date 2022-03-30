@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Salud_para_tu_sonrisa</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DataStructures\DataStructures\DataStructurs.csproj" />
+    <ProjectReference Include="..\DataStructurs\DataStructurs.csproj" />
+  </ItemGroup>
+
+</Project>
