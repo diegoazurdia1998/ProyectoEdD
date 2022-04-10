@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DataStructures\DataStructures\DataStructurs.csproj" />
     <ProjectReference Include="..\DataStructurs\DataStructurs.csproj" />
   </ItemGroup>
 

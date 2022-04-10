@@ -2,25 +2,34 @@
 using System.Collections.Generic;
 using System.Text;
 using DataStructurs.Interfaces;
-
+/*
+ * Basado en el árbol AVL del laboratorio 3
+ */
 namespace DataStructurs.TreeStructurs
 {
     /// <summary>
     /// Clase para un árbol AVL
     /// </summary>
+    /// <typeparam name="K">Tipo de llave del elemento</typeparam>
     /// <typeparam name="T">Tipo de elemento guardado en el árbol</typeparam>
-    public class AVLTree<T> : IAVLtree<T>
+    public class AVLTree<K, T> : IAVLtree<K, T>
     {
-        private AVLNode<T> Raiz; //Raiz del árbol
+        private AVLNode<K, T> Raiz; //Raiz del árbol
+        private CompareKeyDelegate<K> CompareKeyDelegate;
         private int count { get; set; } //cuenta de los nodos en el árbol
         /// <summary>
-        /// Constructor sin parametros de la clase AVLTree
+        /// Constructor 
         /// </summary>
-        public AVLTree()
+        /// <param name="comparer">Delegado comparador de llaves</param>
+        public AVLTree(CompareKeyDelegate<K> comparer)
         {
             this.Raiz = null;
+            this.CompareKeyDelegate = comparer;
         }
-
+        /// <summary>
+        /// Obtiene la cantidad de nodos del árbol
+        /// </summary>
+        /// <returns></returns>
         public int getCount()
         {
             return count;
@@ -32,7 +41,12 @@ namespace DataStructurs.TreeStructurs
             TreeToList(this.Raiz, ListedTree);
             return ListedTree;
         }
-        public virtual void TreeToList(AVLNode<T> raiz, List<T> Tree)
+        /// <summary>
+        /// Recorre el árbol en orden de forma recursiva y coloca los elementos en una lista
+        /// </summary>
+        /// <param name="raiz">Elemento del árbol</param>
+        /// <param name="Tree">Lista para llenar con el árbol</param>
+        public virtual void TreeToList(AVLNode<K, T> raiz, List<T> Tree)
         {
             if (raiz != null)
             {
@@ -41,71 +55,91 @@ namespace DataStructurs.TreeStructurs
                 TreeToList(raiz.Derecha, Tree);
             }
         }
-        public virtual Boolean Contains(T item, IComparer<T> comparer)
+        public virtual Boolean Contains(K key)
         {
-            return Contains(this.Raiz, item, comparer);
+            return Contains(this.Raiz, key);
         }
-        public virtual Boolean Contains(AVLNode<T> raiz, T item, IComparer<T> comparer)
+        /// <summary>
+        /// Compruebaa recursiva si la llave existe en el arbol
+        /// </summary>
+        /// <param name="raiz">Elemento del árbol</param>
+        /// <param name="key">Llave a comprobar</param>
+        /// <returns>true: si la llave existe</returns>
+        public virtual Boolean Contains(AVLNode<K, T> raiz, K key)
         {
             if (raiz == null)
             {
                 return false;
             }
-            if (comparer.Compare(item, raiz.value) < 0)
+            if (CompareKeyDelegate(key, raiz.key) < 0)
             {
-                return Contains(raiz.Izquierda, item, comparer);
+                return Contains(raiz.Izquierda, key);
             }
             else
             {
-                if (comparer.Compare(item, raiz.value) > 0)
+                if (CompareKeyDelegate(key, raiz.key) > 0)
                 {
-                    return Contains(raiz.Derecha, item, comparer);
+                    return Contains(raiz.Derecha, key);
                 }
             }
             return true;
         }
-        public virtual T Find(T item, IComparer<T> comparer)
+        public virtual T Find(K key)
         {
-            return Find(this.Raiz, item, comparer);
+            return Find(this.Raiz, key);
         }
-        public virtual T Find(AVLNode<T> raiz, T item, IComparer<T> comparer)
+        /// <summary>
+        /// Busca recursivamente un elemento en el arbol
+        /// </summary>
+        /// <param name="raiz">Elemento del árbol</param>
+        /// <param name="key">Llave a buscar</param>
+        /// <returns></returns>
+        public virtual T Find(AVLNode<K, T> raiz, K key)
         {
             if (raiz == null)
             {
                 return default(T);
             }
-            if (comparer.Compare(item, raiz.value) < 0)
+            if (CompareKeyDelegate(key, raiz.key) < 0)
             {
-                return Find(raiz.Izquierda, item, comparer);
+                return Find(raiz.Izquierda, key);
             }
             else
             {
-                if (comparer.Compare(item, raiz.value) > 0)
+                if (CompareKeyDelegate(key, raiz.key) > 0)
                 {
-                    return Find(raiz.Derecha, item, comparer);
+                    return Find(raiz.Derecha, key);
                 }
             }
             return raiz.value;
         }
-        public virtual void Add(T item, IComparer<T> comparer)
+        public virtual void Add(K key, T item)
         {
             bool flag = false;
-            this.Raiz = AddAVL(this.Raiz, item, ref flag, comparer);
+            this.Raiz = AddAVL(this.Raiz, key, item, ref flag);
         }
-        public virtual AVLNode<T> AddAVL(AVLNode<T> raiz, T item, ref bool flag, IComparer<T> comparer)
+        /// <summary>
+        /// Añade un elemnto al árbol de forma recursiva
+        /// </summary>
+        /// <param name="raiz">nodo actual</param>
+        /// <param name="key">llave del elemento a insertar</param>
+        /// <param name="item">elemento a insertar</param>
+        /// <param name="flag"> si cambió de altura true</param>
+        /// <returns></returns>
+        public virtual AVLNode<K, T> AddAVL(AVLNode<K, T> raiz, K key, T item, ref bool flag)
         {
-            AVLNode<T> n1;
+            AVLNode<K, T> n1;
             if (raiz == null)
             {
-                raiz = new AVLNode<T>(item);
+                raiz = new AVLNode<K, T>(key, item);
                 flag = true;
                 count++;
             }
             else
             {
-                if (comparer.Compare(item, raiz.value) < 0)
+                if (CompareKeyDelegate(key, raiz.key) < 0)
                 {
-                    raiz.Izquierda = AddAVL(raiz.Izquierda, item, ref flag, comparer);
+                    raiz.Izquierda = AddAVL(raiz.Izquierda, key, item, ref flag);
                     if (flag)
                     {
                         switch (raiz.balance)
@@ -136,9 +170,9 @@ namespace DataStructurs.TreeStructurs
                 }
                 else
                 {
-                    if (comparer.Compare(item, raiz.value) > 0)
+                    if (CompareKeyDelegate(key, raiz.key) > 0)
                     {
-                        raiz.Derecha = AddAVL(raiz.Derecha, item, ref flag, comparer);
+                        raiz.Derecha = AddAVL(raiz.Derecha, key, item, ref flag);
                         if (flag)
                         {
                             switch (raiz.balance)
@@ -174,21 +208,20 @@ namespace DataStructurs.TreeStructurs
             }
             return raiz;
         }
-
-        public virtual void Remove(T item, IComparer<T> comparer)
+        public virtual void Remove(K key)
         {
             bool flag = false;
-            this.Raiz = RemoveAVL(this.Raiz, item, ref flag, comparer);
+            this.Raiz = RemoveAVL(this.Raiz, key, ref flag);
         }
-        public virtual AVLNode<T> RemoveAVL(AVLNode<T> raiz, T item, ref bool flag, IComparer<T> comparer)
+        public virtual AVLNode<K, T> RemoveAVL(AVLNode<K, T> raiz, K key, ref bool flag)
         {
             if (raiz == null)
             {
                 //error
             }
-            if (comparer.Compare(item, raiz.value) < 0)
+            if (CompareKeyDelegate(key, raiz.key) < 0)
             {
-                raiz.Izquierda = RemoveAVL(raiz.Izquierda, item, ref flag, comparer);
+                raiz.Izquierda = RemoveAVL(raiz.Izquierda, key, ref flag);
                 if (flag)
                 {
                     raiz = LeftBalance(raiz, ref flag);
@@ -197,9 +230,9 @@ namespace DataStructurs.TreeStructurs
             }
             else
             {
-                if (comparer.Compare(item, raiz.value) > 0)
+                if (CompareKeyDelegate(key, raiz.key) > 0)
                 {
-                    raiz.Derecha = RemoveAVL(raiz.Derecha, item, ref flag, comparer);
+                    raiz.Derecha = RemoveAVL(raiz.Derecha, key, ref flag);
                     if (flag)
                     {
                         raiz = RightBalance(raiz, ref flag);
@@ -207,7 +240,7 @@ namespace DataStructurs.TreeStructurs
                 }
                 else
                 {
-                    AVLNode<T> q;
+                    AVLNode<K, T> q;
                     q = raiz;
                     if (q.Izquierda == null)
                     {
@@ -235,7 +268,7 @@ namespace DataStructurs.TreeStructurs
             }
             return raiz;
         }
-        public virtual AVLNode<T> Replace(AVLNode<T> n, AVLNode<T> act, ref bool flag)
+        public virtual AVLNode<K, T> Replace(AVLNode<K, T> n, AVLNode<K, T> act, ref bool flag)
         {
             if (act.Derecha != null)
             {
@@ -255,9 +288,9 @@ namespace DataStructurs.TreeStructurs
             }
             return act;
         }
-        public virtual AVLNode<T> LeftBalance(AVLNode<T> n, ref bool flag)
+        public virtual AVLNode<K, T> LeftBalance(AVLNode<K, T> n, ref bool flag)
         {
-            AVLNode<T> n1;
+            AVLNode<K, T> n1;
             switch (n.balance)
             {
                 case 1:
@@ -282,9 +315,9 @@ namespace DataStructurs.TreeStructurs
             }
             return n;
         }
-        public virtual AVLNode<T> RightBalance(AVLNode<T> n, ref bool flag)
+        public virtual AVLNode<K, T> RightBalance(AVLNode<K, T> n, ref bool flag)
         {
-            AVLNode<T> n1;
+            AVLNode<K, T> n1;
             switch (n.balance)
             {
                 case 1:
@@ -312,7 +345,7 @@ namespace DataStructurs.TreeStructurs
             }
             return n;
         }
-        public virtual AVLNode<T> LeftLeftRotation(AVLNode<T> n, AVLNode<T> n1)
+        public virtual AVLNode<K, T> LeftLeftRotation(AVLNode<K, T> n, AVLNode<K, T> n1)
         {
             n.Izquierda = n1.Derecha;
             n1.Derecha = n;
@@ -328,9 +361,9 @@ namespace DataStructurs.TreeStructurs
             }
             return n1;
         }
-        public virtual AVLNode<T> LeftRightRotation(AVLNode<T> n, AVLNode<T> n1)
+        public virtual AVLNode<K, T> LeftRightRotation(AVLNode<K, T> n, AVLNode<K, T> n1)
         {
-            AVLNode<T> n2 = n1.Derecha;
+            AVLNode<K, T> n2 = n1.Derecha;
             n.Izquierda = n2.Derecha;
             n2.Derecha = n;
             n1.Derecha = n2.Izquierda;
@@ -340,7 +373,7 @@ namespace DataStructurs.TreeStructurs
             n2.balance = 0;
             return n2;
         }
-        public virtual AVLNode<T> RightRightRotation(AVLNode<T> n, AVLNode<T> n1)
+        public virtual AVLNode<K, T> RightRightRotation(AVLNode<K, T> n, AVLNode<K, T> n1)
         {
             n.Derecha = n1.Izquierda;
             n1.Izquierda = n;
@@ -356,9 +389,9 @@ namespace DataStructurs.TreeStructurs
             }
             return n1;
         }
-        public virtual AVLNode<T> RightLeftRotation(AVLNode<T> n, AVLNode<T> n1)
+        public virtual AVLNode<K, T> RightLeftRotation(AVLNode<K, T> n, AVLNode<K, T> n1)
         {
-            AVLNode<T> n2 = n1.Izquierda;
+            AVLNode<K, T> n2 = n1.Izquierda;
             n.Derecha = n2.Izquierda;
             n2.Izquierda = n;
             n1.Izquierda = n2.Derecha;

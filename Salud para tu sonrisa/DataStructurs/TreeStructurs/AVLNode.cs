@@ -4,15 +4,17 @@ using System.Text;
 
 namespace DataStructurs.TreeStructurs
 {
-    public class AVLNode<T>
+    public class AVLNode<K, T>
     {
         public T value { get; set; }
-        public AVLNode<T> Izquierda { get; set; }
-        public AVLNode<T> Derecha { get; set; }
+        public K key { get; set; }
+        public AVLNode<K, T> Izquierda { get; set; }
+        public AVLNode<K, T> Derecha { get; set; }
         public int balance { get; set; }
         public AVLNode() { }
-        public AVLNode(T value)
+        public AVLNode(K key, T value)
         {
+            this.key = key;
             this.value = value;
         }
 
