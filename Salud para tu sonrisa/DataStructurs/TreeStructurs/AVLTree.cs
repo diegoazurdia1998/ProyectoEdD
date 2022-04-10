@@ -34,7 +34,10 @@ namespace DataStructurs.TreeStructurs
         {
             return count;
         }
-
+        /// <summary>
+        /// Crea una lista con los elementos del árbol
+        /// </summary>
+        /// <returns></returns>
         public virtual List<T> TreeToList()
         {
             List<T> ListedTree = new List<T>();
@@ -125,202 +128,228 @@ namespace DataStructurs.TreeStructurs
         /// <param name="key">llave del elemento a insertar</param>
         /// <param name="item">elemento a insertar</param>
         /// <param name="flag"> si cambió de altura true</param>
-        /// <returns></returns>
+        /// <returns>Retorna el nodo actual</returns>
         public virtual AVLNode<K, T> AddAVL(AVLNode<K, T> raiz, K key, T item, ref bool flag)
         {
-            AVLNode<K, T> n1;
-            if (raiz == null)
+            AVLNode<K, T> n1; //nodo auxiliar para balancear árbol
+            if (raiz == null) //si el nodo es nulo
             {
-                raiz = new AVLNode<K, T>(key, item);
-                flag = true;
-                count++;
+                raiz = new AVLNode<K, T>(key, item); //se crea un nuevo nodo 
+                flag = true; //la bandera indica que la altura cambió
+                count++; //aumenta la cantidad de nodos en el árbol
             }
-            else
+            else //si el nodo no es nulo se llama recursivamente y se balancea el árbol si la altura cambió
             {
-                if (CompareKeyDelegate(key, raiz.key) < 0)
+                if (CompareKeyDelegate(key, raiz.key) < 0) //si el valor de la llave es menor a la llave actual de la raiz se inserta a la izquierda
                 {
-                    raiz.Izquierda = AddAVL(raiz.Izquierda, key, item, ref flag);
-                    if (flag)
+                    raiz.Izquierda = AddAVL(raiz.Izquierda, key, item, ref flag); //se asigna a la izquierda de la raiz llamando recursivamente al método
+                    if (flag) //si la bandera es verdadera se ajusta el balance del nodo segun el caso
                     {
-                        switch (raiz.balance)
+                        switch (raiz.balance) //analiza el balance del nodo y aplica un caso
                         {
-                            case -1:
-                                raiz.balance = 0;
-                                flag = false;
+                            case -1: //el nodo tiene derecha
+                                raiz.balance = 0; //el balance del nodo cambia a 0 (tiene izquierda y derecha
+                                flag = false; //la bandera indica que la altura no cambió
                                 break;
-                            case 0:
-                                raiz.balance = 1;
+                            case 0: //el nodo no tiene hijos
+                                raiz.balance = 1; //el balance del nodo cambia a 1
                                 break;
-                            case 1:
-                                n1 = raiz.Izquierda;
-                                if (n1.balance == 1)
+                            case 1: //el nodo tiene izquierda
+                                n1 = raiz.Izquierda; //se asigna la izquierda del nodo a n1
+                                if (n1.balance == 1) //si la izquierda tiene balance 1 (tiene izquierda)
                                 {
-                                    raiz = LeftLeftRotation(raiz, n1);
+                                    raiz = LeftLeftRotation(raiz, n1); //se hace una rotacion izquierda simple en la raiz
 
                                 }
                                 else
                                 {
-                                    raiz = LeftRightRotation(raiz, n1);
+                                    raiz = LeftRightRotation(raiz, n1); //se hace una rotacion izquierda doble en la raiz
 
                                 }
-                                flag = false;
+                                flag = false; //la bandera indica que la altura no cambió
                                 break;
                         }
                     }
                 }
                 else
                 {
-                    if (CompareKeyDelegate(key, raiz.key) > 0)
+                    if (CompareKeyDelegate(key, raiz.key) > 0) //si el valor de la llave es mayor a la llave actual de la raiz se inserta a la izquierda
                     {
-                        raiz.Derecha = AddAVL(raiz.Derecha, key, item, ref flag);
-                        if (flag)
+                        raiz.Derecha = AddAVL(raiz.Derecha, key, item, ref flag); //se asigna a la derecha de la raiz llamando recursivamente al método
+                        if (flag) //si la bandera es verdadera se ajusta el balance del nodo segun el caso
                         {
-                            switch (raiz.balance)
+                            switch (raiz.balance) //analiza el balance del nodo y aplica un caso
                             {
-                                case -1:
-                                    n1 = raiz.Derecha;
-                                    if (n1.balance == -1)
+                                case -1: //el nodo tiene derecha
+                                    n1 = raiz.Derecha;//se asigna la derecha del nodo a n1
+                                    if (n1.balance == -1) //si la derecha tiene balance -1 (tiene derecha)
                                     {
-                                        raiz = RightRightRotation(raiz, n1);
+                                        raiz = RightRightRotation(raiz, n1); //se hace una rotacion derecha simple en la raiz
 
                                     }
                                     else
                                     {
-                                        raiz = RightLeftRotation(raiz, n1);
+                                        raiz = RightLeftRotation(raiz, n1); //se hace una rotacion derecha doble en la raiz
                                     }
-                                    flag = false;
+                                    flag = false; //la bandera indica que la altura no cambió
                                     break;
-                                case 0:
-                                    raiz.balance = -1;
+                                case 0://el nodo no tiene hijos
+                                    raiz.balance = -1; //el balance es -1 (ahora tiene derecha)
                                     break;
-                                case 1:
-                                    raiz.balance = 0;
-                                    flag = false;
+                                case 1: //el ndo tiene izquierda
+                                    raiz.balance = 0; //el balance del nodo cambia a 0 (tiene izquierda y derecha)
+                                    flag = false; //la bandera indica que la altura no cambió
                                     break;
                             }
                         }
                     }
                     else
                     {
-                        //error
+                        //error. El valor no es ni mayor ni menor, es igual
                     }
                 }
             }
-            return raiz;
+            return raiz;//reteorna la raiz
         }
         public virtual void Remove(K key)
         {
             bool flag = false;
             this.Raiz = RemoveAVL(this.Raiz, key, ref flag);
         }
+        /// <summary>
+        /// Elimina recursivamente un elemento de la lista
+        /// </summary>
+        /// <param name="raiz">nodo del árbol</param>
+        /// <param name="key">llave del elemento a buscar</param>
+        /// <param name="flag">indica si la altura del árbol cambió</param>
+        /// <returns>Retorna el nodo actual</returns>
         public virtual AVLNode<K, T> RemoveAVL(AVLNode<K, T> raiz, K key, ref bool flag)
         {
-            if (raiz == null)
+            if (raiz == null) //El nodo actual es nulo
             {
-                //error
+                //error. No se encontró el elemento a buscar
             }
-            if (CompareKeyDelegate(key, raiz.key) < 0)
+            if (CompareKeyDelegate(key, raiz.key) < 0) //Si la llave del elemento es menor a la llave del nodo actual
             {
-                raiz.Izquierda = RemoveAVL(raiz.Izquierda, key, ref flag);
-                if (flag)
+                raiz.Izquierda = RemoveAVL(raiz.Izquierda, key, ref flag); //la izquierda del nodo llama recursivamente al método
+                if (flag) //si la altura cambió
                 {
-                    raiz = LeftBalance(raiz, ref flag);
+                    raiz = LeftBalance(raiz, ref flag); //se balancea el árbol por la izquierda
                 }
 
             }
             else
             {
-                if (CompareKeyDelegate(key, raiz.key) > 0)
+                if (CompareKeyDelegate(key, raiz.key) > 0) //Si la llave del elemento es mayor a la llave del nodo actual
                 {
-                    raiz.Derecha = RemoveAVL(raiz.Derecha, key, ref flag);
+                    raiz.Derecha = RemoveAVL(raiz.Derecha, key, ref flag); //la derecha del nodo llama recursivamente al método
                     if (flag)
                     {
-                        raiz = RightBalance(raiz, ref flag);
+                        raiz = RightBalance(raiz, ref flag); //se balancea el árbol por la derecha
                     }
                 }
                 else
                 {
-                    AVLNode<K, T> q;
-                    q = raiz;
-                    if (q.Izquierda == null)
+                    AVLNode<K, T> q; //nodo temporal
+                    q = raiz; // se asigna el valor de la raiz a q
+                    if (q.Izquierda == null) //si la izquierda de q es nula
                     {
-                        raiz = q.Derecha;
-                        flag = true;
+                        raiz = q.Derecha; //la raiz es gual a su derecha
+                        flag = true; //la bandera indica que la altura cambió
                     }
                     else
                     {
-                        if (q.Derecha == null)
+                        if (q.Derecha == null) //si la derecha de q es nula
                         {
-                            raiz = q.Izquierda;
+                            raiz = q.Izquierda; //la raiz es igual a su izquierda
                             flag = true;
                         }
                         else
                         {
-                            raiz.Izquierda = Replace(raiz, raiz.Izquierda, ref flag);
-                            if (flag)
+                            raiz.Izquierda = Replace(raiz, raiz.Izquierda, ref flag); //la izquirdad e la raiz se balancea
+                            if (flag) //si la altura cambió
                             {
-                                raiz = LeftBalance(raiz, ref flag);
+                                raiz = LeftBalance(raiz, ref flag); //se balancea por la izquierda
                             }
-                            q = null;
+                            q = null; //se elimina q
                         }
                     }
                 }
             }
-            return raiz;
+            return raiz; //retorna el nodo actual
         }
+        /// <summary>
+        /// Reemplaza un nodo por el mayor de la izquierda
+        /// </summary>
+        /// <param name="n">nodo a extraer</param>
+        /// <param name="act">nodo mayor de la izquierda</param>
+        /// <param name="flag">referencia de la bandera que indica si cambió la altura</param>
+        /// <returns>retorna el nodo actual</returns>
         public virtual AVLNode<K, T> Replace(AVLNode<K, T> n, AVLNode<K, T> act, ref bool flag)
         {
-            if (act.Derecha != null)
+            if (act.Derecha != null)//si la derecha no es nula
             {
-                act.Derecha = Replace(n, act.Derecha, ref flag);
-                if (flag)
+                act.Derecha = Replace(n, act.Derecha, ref flag); //la derecha del nodo actual llama recursivamente
+                if (flag) //si la altura cambió
                 {
-                    act = RightBalance(act, ref flag);
+                    act = RightBalance(act, ref flag); //el nodo actual se balancea por la derecha
                 }
             }
             else
             {
-                n.value = act.value;
-                n = act;
-                act = act.Izquierda;
-                n = null;
-                flag = true;
+                n.value = act.value;//el valor del nodo n es reemplazado con el valor del nodo actual
+                n = act; //el nodo n es gual el noso actual
+                act = act.Izquierda; //el nodo actual es igual a su izquierda
+                n = null; //es nodo n se vuelve nulo
+                flag = true; //la bandera indica que la altura cambió
             }
-            return act;
+            return act;//retorna el nodo actual
         }
+        /// <summary>
+        /// Verifica si la rotacion es necesaria al eliminar un nodo de la izquierda
+        /// </summary>
+        /// <param name="n">Nodo a verificar</param>
+        /// <param name="flag">Referencia de la bandera que indica si la altura cambio</param>
+        /// <returns></returns>
         public virtual AVLNode<K, T> LeftBalance(AVLNode<K, T> n, ref bool flag)
         {
-            AVLNode<K, T> n1;
-            switch (n.balance)
+            AVLNode<K, T> n1; //nodo auxiliar
+            switch (n.balance) //analiza el balance de n
             {
-                case 1:
-                    n.balance = 0;
+                case 1: //el nodo tiene izquierda
+                    n.balance = 0; //el balance del nodo se vuelve 0
                     break;
                 case 0:
-                    n.balance = -1;
-                    flag = false;
+                    n.balance = -1; //el balance del nodo se vuelve -1
+                    flag = false; // la bandera indica que la altura no cambió
                     break;
-                case -1:
-                    n1 = n.Derecha;
-                    if (n1.balance <= 0)
+                case -1: //el nodo tiene derecha
+                    n1 = n.Derecha; //la derecha de n se asigna a n1
+                    if (n1.balance <= 0) //si el balance es menor o igual a 0
                     {
-                        flag = false;
-                        n = RightRightRotation(n, n1);
+                        flag = false; //la bandera indica que la altura no cambió
+                        n = RightRightRotation(n, n1); 
                     }
                     else
                     {
-                        n = RightLeftRotation(n, n1);
+                        n = RightLeftRotation(n, n1); 
                     }
                     break;
             }
-            return n;
+            return n; //retorna el nodo actual
         }
+        /// <summary>
+        /// Verifica si la rotacion es necesaria al eliminar un nodo de la derecha
+        /// </summary>
+        /// <param name="n">Nodo a verificar</param>
+        /// <param name="flag">Referencia de la bandera que indica si la altura cambio</param>
+        /// <returns></returns>
         public virtual AVLNode<K, T> RightBalance(AVLNode<K, T> n, ref bool flag)
         {
-            AVLNode<K, T> n1;
-            switch (n.balance)
+            AVLNode<K, T> n1; //nodo temporal
+            switch (n.balance) //analiza el balance de n
             {
-                case 1:
+                case 1: //tiene izquierda
                     n1 = n.Izquierda;
                     if (n1.balance >= 0)
                     {
@@ -335,16 +364,22 @@ namespace DataStructurs.TreeStructurs
                         n = LeftRightRotation(n, n1);
                     }
                     break;
-                case 0:
+                case 0:// no tiene hijos
                     n.balance = 1;
                     flag = false;
                     break;
-                case -1:
+                case -1: //tiene derecha
                     n.balance = 0;
                     break;
             }
             return n;
         }
+        /// <summary>
+        /// Totación simple izquierda izquierda
+        /// </summary>
+        /// <param name="n">Nodo actual</param>
+        /// <param name="n1">Izquierda del nodo actual</param>
+        /// <returns></returns>
         public virtual AVLNode<K, T> LeftLeftRotation(AVLNode<K, T> n, AVLNode<K, T> n1)
         {
             n.Izquierda = n1.Derecha;
@@ -361,8 +396,15 @@ namespace DataStructurs.TreeStructurs
             }
             return n1;
         }
+        /// <summary>
+        /// Rotación doble izquierda derecha
+        /// </summary>
+        /// <param name="n">Nodo actual</param>
+        /// <param name="n1">Izquierda del nodo actual</param>
+        /// <returns></returns>
         public virtual AVLNode<K, T> LeftRightRotation(AVLNode<K, T> n, AVLNode<K, T> n1)
         {
+            //derecha de la izquierda del nodo actual
             AVLNode<K, T> n2 = n1.Derecha;
             n.Izquierda = n2.Derecha;
             n2.Derecha = n;
@@ -373,6 +415,12 @@ namespace DataStructurs.TreeStructurs
             n2.balance = 0;
             return n2;
         }
+        /// <summary>
+        /// Rotación simple derecha derecha
+        /// </summary>
+        /// <param name="n">Nodo actual</param>
+        /// <param name="n1">Derecha del nodo actual</param>
+        /// <returns>Nueva raíz</returns>
         public virtual AVLNode<K, T> RightRightRotation(AVLNode<K, T> n, AVLNode<K, T> n1)
         {
             n.Derecha = n1.Izquierda;
@@ -389,8 +437,15 @@ namespace DataStructurs.TreeStructurs
             }
             return n1;
         }
+        /// <summary>
+        /// Rotacion doble derecha izquierda
+        /// </summary>
+        /// <param name="n">Nodo actual</param>
+        /// <param name="n1">Derecha del nodo actual</param>
+        /// <returns></returns>
         public virtual AVLNode<K, T> RightLeftRotation(AVLNode<K, T> n, AVLNode<K, T> n1)
         {
+            //izquierda de la derecha del nodo actual
             AVLNode<K, T> n2 = n1.Izquierda;
             n.Derecha = n2.Izquierda;
             n2.Izquierda = n;

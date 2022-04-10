@@ -1,0 +1,65 @@
+﻿@model Salud_para_tu_sonrisa.Models.Paciente
+
+@{
+    ViewData["Title"] = "recibirDatos";
+}
+
+<h1>Paciente</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="guardarDatos">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Nombre completo</label>
+                <input required type="text" name="name" asp-for="Name" class="form-control" placeholder="Ana María Frank Perez" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ID" class="control-label">DPI o partida de nacimiento</label>
+                <input required asp-for="ID" name="id" class="form-control" />
+                <span asp-validation-for="ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label">Edad</label>
+                <input required type="number" name="age" asp-for="Age" min="2" max="100" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label">Teléfono de contacto</label>
+                <input required type="tel" name="phone" asp-for="Phone" pattern="[0-9]{8}" class="form-control" />
+                <small>Formato: 12345678</small>
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastDate" class="control-label">Fecha de la última consulta</label>
+                <input required type="datetime-local" name="last" asp-for="LastDate" class="form-control" />
+                <span asp-validation-for="LastDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NextDate" class="control-label">Fecha de próxima consulta</label>
+                <input type ="datetime-local" name="next" min="2022-03-24T12:00" asp-for="NextDate" class="form-control" />
+                <span asp-validation-for="NextDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Breve descripción del último diagnóstico o tratamiento en curso</label>
+                <input asp-for="Description" name="desc" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <form asp-action="Index">
+        <input type="submit" value="Cancelar" class="btn btn-primary" />
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

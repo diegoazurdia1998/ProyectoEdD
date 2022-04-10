@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Salud_para_tu_sonrisa.Models.Paciente>
+
+@{
+    ViewData["Title"] = "mostrarPacientes";
+}
+
+<h1>Pacientes</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                ID
+            </th>
+            <th>
+                Edad
+            </th>
+            <th>
+                Contacto
+            </th>
+            <th>
+                Última cita
+            </th>
+            <th>
+                Próxima cita
+            </th>
+            <th>
+                Seguimiento
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in ViewData["pacientes"] as List<Paciente>) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NextDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>
