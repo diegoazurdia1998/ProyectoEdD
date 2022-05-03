@@ -1,43 +1,51 @@
-0 Inserción
-0 Inserción
-0 Rotación doble derecha - izquierda
-0 Inserción
-0 Inserción
-0 Rotación simple derecha - derecha
-0 Inserción
-0 Inserción
-0 Rotación doble izquiqerda - derecha
-0 Inserción
-0 Inserción
-0 Rotación doble derecha - izquierda
-0 Inserción
-0 Rotación simple derecha - derecha
-0 Inserción
-0 Inserción
-0 Rotación simple izquiqerda - izquierda
-0 Inserción
-0 Inserción
-0 Inserción
-0 Inserción
-0 Rotación doble derecha - izquierda
-0 Inserción
-0 Inserción
-0 Inserción
-0 Inserción
-0 Rotación doble izquiqerda - derecha
-0 Inserción
-0 Inserción
-0 Inserción
-0 Inserción
-0 Inserción
-0 Inserción
-0 Inserción
-0 Rotación simple izquiqerda - izquierda
-0 Inserción
-0 Inserción
-0 Inserción
-0 Rotación simple derecha - derecha
-0 Inserción
-0 Recorrido
-0 Recorrido
-0 Busqueda
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Rotación simple derecha - derecha
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Rotación doble izquiqerda - derecha
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Rotación simple izquiqerda - izquierda
+14:17:20 Inserción
+14:17:20 Rotación doble izquiqerda - derecha
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Rotación doble izquiqerda - derecha
+14:17:20 Inserción
+14:17:20 Rotación doble derecha - izquierda
+14:17:20 Inserción
+14:17:20 Rotación simple izquiqerda - izquierda
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Rotación simple derecha - derecha
+14:17:20 Inserción
+14:17:20 Rotación simple derecha - derecha
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Rotación doble izquiqerda - derecha
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Rotación simple derecha - derecha
+14:17:20 Inserción
+14:17:20 Rotación doble izquiqerda - derecha
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Inserción
+14:17:20 Rotación simple derecha - derecha
+14:17:20 Inserción
+14:17:20 Recorrido
+14:19:22 Rotación simple izquiqerda - izquierda
+14:19:22 Inserción
+14:19:36 Recorrido
+14:20:6 Busqueda
+14:20:11 Recorrido
+14:20:14 Busqueda
+14:20:14 Recorrido

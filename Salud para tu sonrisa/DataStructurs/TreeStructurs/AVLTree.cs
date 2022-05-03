@@ -54,7 +54,7 @@ namespace DataStructurs.TreeStructurs
             TreeToList(this.Raiz, ListedTree);
             //log
             if (_log != null)
-                _log.WriteLine(DateTime.Today.Hour.ToString() + " Recorrido");
+                _log.WriteLine(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString() + " Recorrido");
             return ListedTree;
         }
         /// <summary>
@@ -104,7 +104,7 @@ namespace DataStructurs.TreeStructurs
         {
             //log
             if (_log != null)
-                _log.WriteLine(DateTime.Today.Hour.ToString() + " Busqueda");
+                _log.WriteLine(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString() + " Busqueda");
             return Find(this.Raiz, key);
             
         }
@@ -139,7 +139,7 @@ namespace DataStructurs.TreeStructurs
             this.Raiz = AddAVL(this.Raiz, key, item, ref flag);
             //log
             if(_log != null)
-                _log.WriteLine(DateTime.Today.Hour.ToString() + " Inserción");
+                _log.WriteLine(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString() + " Inserción");
         }
         /// <summary>
         /// Añade un elemnto al árbol de forma recursiva
@@ -237,7 +237,7 @@ namespace DataStructurs.TreeStructurs
             this.Raiz = RemoveAVL(this.Raiz, key, ref flag);
             //log
             if(_log != null)
-                _log.WriteLine(DateTime.Today.Hour.ToString() + " Eliminación");
+                _log.WriteLine(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString() + " Eliminación");
         }
         /// <summary>
         /// Elimina recursivamente un elemento de la lista
@@ -328,7 +328,7 @@ namespace DataStructurs.TreeStructurs
             }
             //log
             if (_log != null)
-                _log.WriteLine(DateTime.Today.Hour.ToString() + " Reemplazo por mayor de los menores.");
+                _log.WriteLine(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString() + " Reemplazo por mayor de los menores.");
             return act;//retorna el nodo actual
         }
         /// <summary>
@@ -362,7 +362,7 @@ namespace DataStructurs.TreeStructurs
                     }
                     //log
                     if (_log != null)
-                        _log.WriteLine(DateTime.Today.Hour.ToString() + " Balanceo luego de extraer nodo de izquierda");
+                        _log.WriteLine(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString() + " Balanceo luego de extraer nodo de izquierda");
                     break;
             }
             return n; //retorna el nodo actual
@@ -394,7 +394,7 @@ namespace DataStructurs.TreeStructurs
                     }
                     //log
                     if (_log != null)
-                        _log.WriteLine(DateTime.Today.Hour.ToString() + " Balanceo luego de extraer nodo de derecha");
+                        _log.WriteLine(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString() + " Balanceo luego de extraer nodo de derecha");
                     break;
                 case 0:// no tiene hijos
                     n.balance = 1;
@@ -428,7 +428,7 @@ namespace DataStructurs.TreeStructurs
             }
             //log
             if (_log != null)
-                _log.WriteLine(DateTime.Today.Hour.ToString() + " Rotación simple izquiqerda - izquierda");
+                _log.WriteLine(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString() + " Rotación simple izquiqerda - izquierda");
             return n1;
         }
         /// <summary>
@@ -450,7 +450,7 @@ namespace DataStructurs.TreeStructurs
             n2.balance = 0;
             //log
             if (_log != null)
-                _log.WriteLine(DateTime.Today.Hour.ToString() + " Rotación doble izquiqerda - derecha");
+                _log.WriteLine(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString() + " Rotación doble izquiqerda - derecha");
             return n2;
         }
         /// <summary>
@@ -475,7 +475,7 @@ namespace DataStructurs.TreeStructurs
             }
             //log
             if (_log != null)
-                _log.WriteLine(DateTime.Today.Hour.ToString() + " Rotación simple derecha - derecha");
+                _log.WriteLine(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString() + " Rotación simple derecha - derecha");
             return n1;
         }
         /// <summary>
@@ -497,7 +497,7 @@ namespace DataStructurs.TreeStructurs
             n2.balance = 0;
             //log
             if (_log != null)
-                _log.WriteLine(DateTime.Today.Hour.ToString() + " Rotación doble derecha - izquierda");
+                _log.WriteLine(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString() + " Rotación doble derecha - izquierda");
             return n2;
         }
        
