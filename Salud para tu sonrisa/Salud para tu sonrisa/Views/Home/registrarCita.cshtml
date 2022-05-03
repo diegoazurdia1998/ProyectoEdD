@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "registrarCita";
+}
+@if(ViewBag.NewDate != null)
+{ 
+<p class="text-center">
+    <h4>
+        Se actualizó la cita de @ViewBag.NewDate.Name, para la fecha @ViewBag.NewDate.NextDate<br />
+        <a asp-action="Index">Aceptar</a>
+    </h4>
+</p>
+}

@@ -3,11 +3,29 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Salud para tu sontrisa</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <h1  class="display-4" style="font-size:500%; font-family:serif;" >Salud para tu sonrisa</h1>
+                </th>
+                <th>
+                    <img src="https://png.pngtree.com/template/20190717/ourlarge/pngtree-dental-smile-logo-template-vector-blue-image_229150.jpg" alt="logo" style="width: 128px; height: 128px;" />
+                </th>
+            </tr>
+        </thead>
+    </table>
     <h4>
-        <p>
-            <a asp-action="recibirDatos">Registrar paciente</a><br />
-            <a asp-action="">Buscar pacientes</a>
+        <p style="font-family:serif; font-size:200%">
+            <br />
+            <a asp-action="recibirDatos">Registrar paciente</a><br /><br />
+            <a asp-action="Seguimiento" asp-route-tipo=3>Seguimiento de pacientes</a>
         </p>
     </h4>
+    <h6>
+        <p style="font-family:serif; font-size:100%">
+            <a asp-action="extraerLog">Descargar log</a>
+            </p>
+    </h6>
 </div>
+    

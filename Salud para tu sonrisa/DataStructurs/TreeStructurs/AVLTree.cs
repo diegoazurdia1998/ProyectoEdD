@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using DataStructurs.Interfaces;
+using System.IO;
 /*
  * Basado en el árbol AVL del laboratorio 3
  */
@@ -16,6 +17,7 @@ namespace DataStructurs.TreeStructurs
     {
         private AVLNode<K, T> Raiz; //Raiz del árbol
         private CompareKeyDelegate<K> CompareKeyDelegate;
+        public StreamWriter _log;
         private int count { get; set; } //cuenta de los nodos en el árbol
         /// <summary>
         /// Constructor 
@@ -25,6 +27,13 @@ namespace DataStructurs.TreeStructurs
         {
             this.Raiz = null;
             this.CompareKeyDelegate = comparer;
+            this._log = null;
+        }
+        public AVLTree(CompareKeyDelegate<K> comparer, String name)
+        {
+            this.Raiz = null;
+            this.CompareKeyDelegate = comparer;
+            this._log = new StreamWriter(name);
         }
         /// <summary>
         /// Obtiene la cantidad de nodos del árbol
@@ -40,8 +49,12 @@ namespace DataStructurs.TreeStructurs
         /// <returns></returns>
         public virtual List<T> TreeToList()
         {
+
             List<T> ListedTree = new List<T>();
             TreeToList(this.Raiz, ListedTree);
+            //log
+            if (_log != null)
+                _log.WriteLine(DateTime.Today.Hour.ToString() + " Recorrido");
             return ListedTree;
         }
         /// <summary>
@@ -89,7 +102,11 @@ namespace DataStructurs.TreeStructurs
         }
         public virtual T Find(K key)
         {
+            //log
+            if (_log != null)
+                _log.WriteLine(DateTime.Today.Hour.ToString() + " Busqueda");
             return Find(this.Raiz, key);
+            
         }
         /// <summary>
         /// Busca recursivamente un elemento en el arbol
@@ -120,6 +137,9 @@ namespace DataStructurs.TreeStructurs
         {
             bool flag = false;
             this.Raiz = AddAVL(this.Raiz, key, item, ref flag);
+            //log
+            if(_log != null)
+                _log.WriteLine(DateTime.Today.Hour.ToString() + " Inserción");
         }
         /// <summary>
         /// Añade un elemnto al árbol de forma recursiva
@@ -215,6 +235,9 @@ namespace DataStructurs.TreeStructurs
         {
             bool flag = false;
             this.Raiz = RemoveAVL(this.Raiz, key, ref flag);
+            //log
+            if(_log != null)
+                _log.WriteLine(DateTime.Today.Hour.ToString() + " Eliminación");
         }
         /// <summary>
         /// Elimina recursivamente un elemento de la lista
@@ -303,6 +326,9 @@ namespace DataStructurs.TreeStructurs
                 n = null; //es nodo n se vuelve nulo
                 flag = true; //la bandera indica que la altura cambió
             }
+            //log
+            if (_log != null)
+                _log.WriteLine(DateTime.Today.Hour.ToString() + " Reemplazo por mayor de los menores.");
             return act;//retorna el nodo actual
         }
         /// <summary>
@@ -334,6 +360,9 @@ namespace DataStructurs.TreeStructurs
                     {
                         n = RightLeftRotation(n, n1); 
                     }
+                    //log
+                    if (_log != null)
+                        _log.WriteLine(DateTime.Today.Hour.ToString() + " Balanceo luego de extraer nodo de izquierda");
                     break;
             }
             return n; //retorna el nodo actual
@@ -363,6 +392,9 @@ namespace DataStructurs.TreeStructurs
                     {
                         n = LeftRightRotation(n, n1);
                     }
+                    //log
+                    if (_log != null)
+                        _log.WriteLine(DateTime.Today.Hour.ToString() + " Balanceo luego de extraer nodo de derecha");
                     break;
                 case 0:// no tiene hijos
                     n.balance = 1;
@@ -394,6 +426,9 @@ namespace DataStructurs.TreeStructurs
                 n.balance = 1;
                 n1.balance = -1;
             }
+            //log
+            if (_log != null)
+                _log.WriteLine(DateTime.Today.Hour.ToString() + " Rotación simple izquiqerda - izquierda");
             return n1;
         }
         /// <summary>
@@ -413,6 +448,9 @@ namespace DataStructurs.TreeStructurs
             n1.balance = (n2.balance == -1) ? 1 : 0;
             n.balance = (n2.balance == 1) ? -1 : 0;
             n2.balance = 0;
+            //log
+            if (_log != null)
+                _log.WriteLine(DateTime.Today.Hour.ToString() + " Rotación doble izquiqerda - derecha");
             return n2;
         }
         /// <summary>
@@ -435,6 +473,9 @@ namespace DataStructurs.TreeStructurs
                 n.balance = -1;
                 n1.balance = -1;
             }
+            //log
+            if (_log != null)
+                _log.WriteLine(DateTime.Today.Hour.ToString() + " Rotación simple derecha - derecha");
             return n1;
         }
         /// <summary>
@@ -454,6 +495,9 @@ namespace DataStructurs.TreeStructurs
             n.balance = (n2.balance == -1) ? 1 : 0;
             n1.balance = (n2.balance == 1) ? -1 : 0;
             n2.balance = 0;
+            //log
+            if (_log != null)
+                _log.WriteLine(DateTime.Today.Hour.ToString() + " Rotación doble derecha - izquierda");
             return n2;
         }
        

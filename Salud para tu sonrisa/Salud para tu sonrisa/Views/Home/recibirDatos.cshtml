@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="NextDate" class="control-label">Fecha de próxima consulta</label>
-                <input type ="datetime-local" name="next" min="2022-03-24T12:00" asp-for="NextDate" class="form-control" />
+                <input type ="datetime-local" name="next" min="2022-03-24T12:00" value="2022-03-24T12:00" asp-for="NextDate" class="form-control" />
                 <span asp-validation-for="NextDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -62,4 +62,4 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+                }

@@ -1,18 +1,23 @@
 ﻿@model IEnumerable<Salud_para_tu_sonrisa.Models.Paciente>
 
 @{
-    ViewData["Title"] = "mostrarPacientes";
+    ViewData["Title"] = "Seguimiento";
 }
-
-
 <div class="text-center">
-    <form asp-action="buscarPaciente">
-        <label>Buscar paciente</label>
-        <input type="text" name="search" />
-        <input type="submit" value="Buscar" class="btn btn-info" />
-    </form>
+    <h4>
+        <form asp-action="Seguimiento">
+            <label id="tipo">Buscar por tratamiento o diagnóstico</label><br />
+            <select id="tipo" name="tipo" class="form-control">
+                <option value=0>Limpieza dental</option>
+                <option value=1>Ortodoncia</option>
+                <option value=2>Caries</option>
+                <option value=3>Específico</option>
+            </select><br />
+            <input type="submit" value="Buscar" class="btn btn-info" />
+        </form>
+    </h4>
 </div>
-<h1>Pacientes de la clínica</h1>
+<h1>@ViewBag.Follow</h1>
 
 <table class="table">
     <thead>
@@ -27,7 +32,7 @@
                 Edad
             </th>
             <th>
-                Contacto
+                Contancto
             </th>
             <th>
                 Última cita
@@ -42,8 +47,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in ViewData["pacientes"] as List<Paciente>)
-{
+@foreach (var item in ViewData["seguimiento"] as List<Paciente>) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -61,7 +65,7 @@
                 @Html.DisplayFor(modelItem => item.LastDate)
             </td>
             <td>
-                @{ 
+                @{
                     DateTime compare = new DateTime(2022, 03, 24, 12, 00, 00);
                     if (item.NextDate == default || item.NextDate == compare)
                     {
@@ -69,14 +73,19 @@
                     }
                     else
                     {
-                        @Html.DisplayFor(modelItem => item.NextDate);
-                    }
+                    @Html.DisplayFor(modelItem => item.NextDate);
+                }
                 }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            
+            <td>
+                <form asp-action="buscarPaciente">
+                    <input type="hidden" name="search" value=@item.ID />
+                    <input type="submit" value="Editar cita" class="btn btn-info" />
+                </form>
+            </td>
         </tr>
 }
     </tbody>

@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewData["Title"] = "buscarPaciente";
+}
+
+
+@if (ViewBag.SerchedPatient != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Edad
+                </th>
+                <th>
+                    Contacto
+                </th>
+                <th>
+                    Última cita
+                </th>
+                <th>
+                    Próxima cita
+                </th>
+                <th>
+                    Seguimiento
+                </th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @ViewBag.SerchedPatient.Name
+                </td>
+                <td>
+                    @ViewBag.SerchedPatient.ID
+                </td>
+                <td>
+                    @ViewBag.SerchedPatient.Age
+                </td>
+                <td>
+                    @ViewBag.SerchedPatient.Phone
+                </td>
+                <td>
+                    @ViewBag.SerchedPatient.LastDate
+                </td>
+                <td>
+                    @{
+                        DateTime next = ViewBag.SerchedPatient.NextDate;
+                        if (next == default)
+                        {
+                            Write("Sin cita");
+                        }
+                        else
+                        {
+                            @ViewBag.SerchedPatient.NextDate
+                        }
+                    }
+                </td>
+                <td>
+                    @ViewBag.SerchedPatient.Description
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <form asp-action="registrarCita">
+        <input type="hidden" name="pacientID" value=@ViewBag.SerchedPatient.ID />
+        <label id="nextDate">Ingrese la nueva cita</label>
+        <input type="datetime-local" min="Today" id="nextDate" name="next" />
+        <input type="submit" value="Añadir próxima cita" class="btn btn-info" />
+    </form>
+    
+}
+else
+{
+<h1 class="text-center">
+    @ViewBag.SerchedPatientFalse;
+</h1>
+}
+<a asp-action="Index">Regresar al inicio</a>

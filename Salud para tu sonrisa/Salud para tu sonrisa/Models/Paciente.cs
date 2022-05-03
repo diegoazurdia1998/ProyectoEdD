@@ -47,5 +47,13 @@ namespace Salud_para_tu_sonrisa.Models
             this.NextDate = next;
             this.Description = desc;
         }
+        public Paciente(String search, int searchI)
+        {
+            if (searchI == 0)
+                this.Name = search;
+            else
+                this.ID = search;
+        }
+        
     }
 }
