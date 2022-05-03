@@ -49,3 +49,18 @@
 14:20:11 Recorrido
 14:20:14 Busqueda
 14:20:14 Recorrido
+14:23:52 Recorrido
+14:24:13 Rotación simple izquiqerda - izquierda
+14:24:13 Inserción
+14:24:16 Recorrido
+14:24:23 Recorrido
+14:24:45 Recorrido
+14:25:27 Inserción
+14:25:49 Inserción
+14:25:52 Recorrido
+14:25:59 Recorrido
+14:26:5 Recorrido
+14:26:10 Recorrido
+14:26:14 Recorrido
+14:26:41 Inserción
+14:26:44 Recorrido

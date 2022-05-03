@@ -225,6 +225,9 @@ namespace DataStructurs.TreeStructurs
                     }
                     else
                     {
+                        if (_log != null)
+                            _log.WriteLine(DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString() + " Fallo al insertar");
+
                         //error. El valor no es ni mayor ni menor, es igual
                     }
                 }
