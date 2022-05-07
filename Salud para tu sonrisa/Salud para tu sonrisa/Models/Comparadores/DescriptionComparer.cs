@@ -9,7 +9,7 @@ namespace Salud_para_tu_sonrisa.Models.Comparadores
             String Search = "";
             for (int i = 0; i < description.Length; i++)
             {
-                if (description[i] == ' ')
+                if (description[i] == ' ' || description[i] == ',' || description[i] == '.')
                 {
                     if (Search.CompareTo(searchedWord) == 0)
                     {

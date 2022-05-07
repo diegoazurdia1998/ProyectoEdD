@@ -18,8 +18,14 @@
     <h4>
         <p style="font-family:serif; font-size:200%">
             <br />
-            <a asp-action="recibirDatos">Registrar paciente</a><br /><br />
-            <a asp-action="Seguimiento" asp-route-tipo=3>Seguimiento de pacientes</a>
+            <form asp-action="recibirDatos">
+                <input type="submit" value="Registrar paciente" class="btn btn-info" />
+            </form>
+            <br />
+            <form asp-action="Seguimiento">
+                <input type="hidden" value=-1 name="tipo" />
+                <input type="submit" value="Seguimiento de pacientes" class="btn btn-info" />
+            </form>
         </p>
     </h4>
     <h6>

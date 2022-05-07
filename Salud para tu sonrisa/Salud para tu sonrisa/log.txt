@@ -1,66 +1,65 @@
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Rotación simple derecha - derecha
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Rotación doble izquiqerda - derecha
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Rotación simple izquiqerda - izquierda
-14:17:20 Inserción
-14:17:20 Rotación doble izquiqerda - derecha
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Rotación doble izquiqerda - derecha
-14:17:20 Inserción
-14:17:20 Rotación doble derecha - izquierda
-14:17:20 Inserción
-14:17:20 Rotación simple izquiqerda - izquierda
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Rotación simple derecha - derecha
-14:17:20 Inserción
-14:17:20 Rotación simple derecha - derecha
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Rotación doble izquiqerda - derecha
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Rotación simple derecha - derecha
-14:17:20 Inserción
-14:17:20 Rotación doble izquiqerda - derecha
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Inserción
-14:17:20 Rotación simple derecha - derecha
-14:17:20 Inserción
-14:17:20 Recorrido
-14:19:22 Rotación simple izquiqerda - izquierda
-14:19:22 Inserción
-14:19:36 Recorrido
-14:20:6 Busqueda
-14:20:11 Recorrido
-14:20:14 Busqueda
-14:20:14 Recorrido
-14:23:52 Recorrido
-14:24:13 Rotación simple izquiqerda - izquierda
-14:24:13 Inserción
-14:24:16 Recorrido
-14:24:23 Recorrido
-14:24:45 Recorrido
-14:25:27 Inserción
-14:25:49 Inserción
-14:25:52 Recorrido
-14:25:59 Recorrido
-14:26:5 Recorrido
-14:26:10 Recorrido
-14:26:14 Recorrido
-14:26:41 Inserción
-14:26:44 Recorrido
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Rotación doble derecha - izquierda
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Rotación simple derecha - derecha
+19:57:44 Inserción
+19:57:44 Rotación simple izquiqerda - izquierda
+19:57:44 Inserción
+19:57:44 Rotación doble izquiqerda - derecha
+19:57:44 Inserción
+19:57:44 Rotación doble derecha - izquierda
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Rotación simple derecha - derecha
+19:57:44 Inserción
+19:57:44 Rotación doble derecha - izquierda
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Rotación simple izquiqerda - izquierda
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Rotación doble derecha - izquierda
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Rotación doble izquiqerda - derecha
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Rotación doble izquiqerda - derecha
+19:57:44 Inserción
+19:57:44 Fallo al insertar
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Inserción
+19:57:44 Rotación doble izquiqerda - derecha
+19:57:44 Inserción
+19:57:44 Recorrido
+19:59:11 Rotación simple izquiqerda - izquierda
+19:59:11 Inserción
+19:59:18 Recorrido
+20:0:7 Busqueda
+20:0:7 Recorrido
+20:0:25 Recorrido
+20:1:40 Recorrido
+20:1:58 Recorrido
+20:2:10 Recorrido
+20:2:16 Recorrido

@@ -52,8 +52,9 @@
                 </td>
                 <td>
                     @{
-                        DateTime next = ViewBag.SerchedPatient.NextDate;
-                        if (next == default)
+                        Paciente item = ViewBag.SerchedPatient;
+                        DateTime compare = new DateTime(2022, 03, 24, 12, 00, 00);
+                        if (item.NextDate == default || item.NextDate == compare)
                         {
                             Write("Sin cita");
                         }
@@ -69,6 +70,7 @@
             </tr>
         </tbody>
     </table>
+    <br />
     <form asp-action="registrarCita">
         <input type="hidden" name="pacientID" value=@ViewBag.SerchedPatient.ID />
         <label id="nextDate">Ingrese la nueva cita</label>
@@ -83,6 +85,9 @@ else
     @ViewBag.SerchedPatientFalse
 </h1>
 }
+<br />
 <h3 class="text-center">
-    <a asp-action="Index">Regresar al inicio</a>
+    <form asp-action="Index">
+        <input type="submit" value="Regresar al inicio" class="btn btn-info" />
+    </form>
 </h3>

@@ -14,6 +14,7 @@ namespace Salud_para_tu_sonrisa.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private static AVLTree<String, Paciente> PacientesClinica = new AVLTree<string, Paciente>(new Models.Comparadores.KeyComparer().Comparer, "log.txt");
+        private static List<Citas> citas = new List<Citas>();
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -55,8 +56,41 @@ namespace Salud_para_tu_sonrisa.Controllers
         /// <returns>View con la confirmación de guardado</returns>
         public IActionResult guardarDatos(String name, String id, int age, String phone, DateTime last, DateTime next = default, String desc = default)
         {
-            Paciente nuevoIngreso = new Paciente(name, id, age, phone, last, next, desc);
-            PacientesClinica.Add(id, nuevoIngreso);
+            
+            DateTime defaultDT = new DateTime(2022, 03, 24, 12, 00, 00);
+            bool Lleno = false;
+            if (citas.Count > 0 && next != defaultDT)
+            {
+                foreach(var item in citas)
+                {
+                    if (item.Espacios < 8)
+                    {
+                        Paciente nuevoIngreso = new Paciente(name, id, age, phone, last, next, desc);
+                        PacientesClinica.Add(id, nuevoIngreso);
+                        if (next == item.Fecha)
+                        {
+                            item.Espacios++;
+                        }
+                        else
+                        {
+                            Citas nuevaFecha = new Citas(next, 1);
+                            citas.Add(nuevaFecha);
+                        }
+                    }
+                    else
+                    {
+                        Lleno = true;
+                    }
+                }
+            }
+            else
+            {
+                Paciente nuevoIngreso = new Paciente(name, id, age, phone, last, next, desc);
+                PacientesClinica.Add(id, nuevoIngreso);
+                Citas nuevaFecha = new Citas(next, 1);
+                citas.Add(nuevaFecha);
+            }
+            ViewBag.lleno = Lleno;
             ViewBag.PacienteIngresado = name + ", con ID " + id + ", contacto " + phone;
             
             return View();
@@ -71,22 +105,22 @@ namespace Salud_para_tu_sonrisa.Controllers
             {
                 Random rand = new Random();
                 String desc;
-                int descRand;
-                int randString;
+                int descRand, randString, randID;
                 DateTime prev = new DateTime(2021, 06, 25, 11, 50, 50);
-                for (int i = 10; i < 40; i++)
+                for (int i = 10; i < 51; i++)
                 {
                     randString = rand.Next(10, 99);
                     descRand = rand.Next(0,4);
+                    randID = rand.Next(0, 500);
                     if (descRand == 0)
                         desc = default;
                     else if (descRand == 1)
-                        desc = "ortodoncia";
+                        desc = "tratamiento de ortodoncia";
                     else if (descRand == 2)
-                        desc = "caries";
+                        desc = "caries a tratar 5 consulta";
                     else
-                        desc = "tratamiento especifico";
-                    Paciente nuevo = new Paciente(Convert.ToString(randString), Convert.ToString(randString), i, Convert.ToString(randString), prev ,desc);
+                        desc = "tratamiento especifico del paciente";
+                    Paciente nuevo = new Paciente(('n' + Convert.ToString(randString)),("id" + Convert.ToString(randID)), randString,("phone" + Convert.ToString(randString)), prev ,desc);
                     PacientesClinica.Add(nuevo.ID, nuevo);
                 }
             }
@@ -100,24 +134,31 @@ namespace Salud_para_tu_sonrisa.Controllers
         /// <returns>Vista con la información del paciente</returns>
         public IActionResult buscarPaciente(String search)
         {
-            //busca al paciente por su id
-            Paciente buscarPaciente = PacientesClinica.Find(search);
-            //si no encuentra al paciente por su id lo busca por su nombre
-            if (buscarPaciente == default)
+            if (search != null)
             {
-                //crea un arbol con el nombre como llave
-                AVLTree<String, Paciente> nameTree = new AVLTree<string, Paciente>(new Models.Comparadores.KeyComparer().Comparer);
-                foreach (var item in PacientesClinica.TreeToList())
+                //busca al paciente por su id
+                Paciente buscarPaciente = PacientesClinica.Find(search);
+                //si no encuentra al paciente por su id lo busca por su nombre
+                if (buscarPaciente == default)
                 {
-                    nameTree.Add(item.Name, item);
+                    //crea un arbol con el nombre como llave
+                    AVLTree<String, Paciente> nameTree = new AVLTree<string, Paciente>(new Models.Comparadores.KeyComparer().Comparer);
+                    foreach (var item in PacientesClinica.TreeToList())
+                    {
+                        nameTree.Add(item.Name, item);
+                    }
+                    buscarPaciente = nameTree.Find(search);
                 }
-                buscarPaciente = nameTree.Find(search);
+                if (buscarPaciente != default)
+                {
+                    ViewBag.SerchedPatient = buscarPaciente;
+                }
+                else
+                {
+                    ViewBag.SerchedPatientFalse = "No se encontró el paciente";
+                }
             }
-            if (buscarPaciente != default)
-            {
-                ViewBag.SerchedPatient = buscarPaciente;
-            }
-            else 
+            else
             {
                 ViewBag.SerchedPatientFalse = "No se encontró el paciente";
             }
@@ -135,8 +176,12 @@ namespace Salud_para_tu_sonrisa.Controllers
             int MonthDiff;
             DateTime Today = DateTime.Today;
             DateTime defaultDate = new DateTime(2022, 03, 24, 12, 00, 00);
+            if (tipo == -1)
+            {
+                ViewBag.Follow = "";
+            }
             //guarda a los pacientes con almenos 6 meses sin cita y sin descripción
-            if (tipo == 0)
+            else if (tipo == 0)
             {
                 foreach (var item in PacientesClinica.TreeToList())
                 {
@@ -225,9 +270,35 @@ namespace Salud_para_tu_sonrisa.Controllers
         /// <returns>Vista con el paciente y su nueva cita</returns>
         public IActionResult registrarCita(String pacientID, DateTime next)
         {
-            Paciente update = PacientesClinica.Find(pacientID);
-            update.NextDate = next;
-            ViewBag.NewDate = update;
+            DateTime defaultDT = new DateTime(2022, 03, 24, 12, 00, 00);
+            bool Lleno = false;
+            if (citas.Count > 0 && next != defaultDT)
+            {
+                foreach (var item in citas)
+                {
+                    if (item.Espacios < 8)
+                    {
+                        Paciente update = PacientesClinica.Find(pacientID);
+                        update.NextDate = next;
+                        ViewBag.NewDate = update;
+                        if (next == item.Fecha)
+                        {
+                            item.Espacios++;
+                        }
+                        else
+                        {
+                            Citas nuevaFecha = new Citas(next, 1);
+                            citas.Add(nuevaFecha);
+                        }
+                    }
+                    else
+                    {
+                        Lleno = true;
+                    }
+                }
+            }
+            ViewBag.lleno = Lleno;
+            
             return View();
         }
         public IActionResult extraerLog()
